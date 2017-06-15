@@ -1,0 +1,30 @@
+{
+  "name": "opentok-electron",
+  "version": "1.0.0",
+  "description": "a opentok electron hello world sample app",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjb421/opentok-electron.git"
+  },
+  "keywords": [
+    "electron",
+    "opentok"
+  ],
+  "author": "james zhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zjb421/opentok-electron/issues"
+  },
+  "homepage": "https://github.com/zjb421/opentok-electron#readme",
+  "bin": {
+    "my-app": "./bin/my-app"
+  },
+  "dependencies": {
+    "electron-prebuilt": "^1.4.13",
+    "electron-rebuild": "^1.5.11"
+  }
+}
