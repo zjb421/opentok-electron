@@ -23,8 +23,12 @@
   "bin": {
     "my-app": "./bin/my-app"
   },
+  "devDependencies": {
+    "electron": "^1.3.4"
+  },
   "dependencies": {
     "electron-prebuilt": "^1.4.13",
-    "electron-rebuild": "^1.5.11"
+    "electron-rebuild": "^1.5.11",
+    "express": "^4.15.3"
   }
 }
