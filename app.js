@@ -1,57 +1,25 @@
-var app = require('app');  // Module to control application life.  
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var express = require('express');
-var logger = require('morgan');
-const {app, autoUpdater, BrowserWindow, dialog, Menu, Tray} = require('electron')
+var OT_API_KEY = "100";
+var OT_SESSION_ID = "1_MX4xMDB-fjE0OTc0NjU2MjU5MjZ-bGtWdUtMaFpCU1BEbUJ5TG9kOXYwc3Myfn4";
+var OT_TOKEN = "T1==cGFydG5lcl9pZD0xMDAmc2RrX3ZlcnNpb249dGJwaHAtdjAuOTEuMjAxMS0wNy0wNSZzaWc9NTNlMzQwYzhmMjU5MTYwOTU4ZDhlOTYxOGYyNDMxOWUxNTZhYmFmYjpzZXNzaW9uX2lkPTFfTVg0eE1EQi1makUwT1RjME5qVTJNalU1TWpaLWJHdFdkVXRNYUZwQ1UxQkViVUo1VEc5a09YWXdjM015Zm40JmNyZWF0ZV90aW1lPTE0OTc0NjU2MjYmcm9sZT1tb2RlcmF0b3Imbm9uY2U9MTQ5NzQ2NTYyNi4wNjk0MzYzNzAyODYwJmV4cGlyZV90aW1lPTE1MDAwNTc2MjY=";
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the javascript object is GCed.
-var mainWindow = null;
 
-function startExpress()
-{
-  var app = express();
-
-  app.use(logger('combined'));
-  app.set('views', __dirname + '/front/main.html');
-  app.set('view engine', 'ejs');
-  app.use(express.static(__dirname + '/font'));
-
-  app.get('/', function(req, res) {
-    res.render(__dirname + '/font/main.html');
+const session = OT.initSession(OT_API_KEY, OT_SESSION_ID);
+session.on('streamCreated', function (event) {
+  session.subscribe(event.stream, function (err) {
+    if (err) alert(err.message);
   });
-
-  app.listen(3000);
-}
-
-function createWindow () {
-  win = new BrowserWindow({width: 800, height: 600});
-
-  win.webContents.openDevTools();
-  win.setMenu(null);
-
-  win.loadURL('file://' + __dirname + '/front/main.htm');
-  
-  win.on('close', function(event) {
-    if (!app.isQuiting) {
-      event.preventDefault()
-      win.hide();
-    }
-  });
-
-  win.on('minimize',function(event) {
-  });
-}
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function() {  
-  if (process.platform != 'darwin')
-    app.quit();
 });
 
-// This method will be called when Electron has done everything
-// initialization and ready for creating browser windows.
-app.on('ready', function() {
-  startExpress()
-  createWindow();
+var publisher = OT.initPublisher("myPublisher", function(err) {
+  if (err) {
+    alert('OT.initPublisher error: ', err);
+  }
+});
+
+session.connect(function(err) {
+  if (!err) {
+    session.publish(publisher);
+  } else {
+    alert(err.message);
+  }
 });
